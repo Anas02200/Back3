@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.entities.Admin;
 import com.entities.Service;
 import com.entities.Service;
 import com.services.ServiceRepository;
@@ -29,7 +30,7 @@ public class serviceLogicImp implements serviceLogic {
 	public Service addService(String typeService,
 			String ServiceDesc) {
 		// TODO Auto-generated method stub
-		Service serviceT=serviceRepository.findBytypeService(typeService);
+		Service serviceT=serviceRepository.findByName(typeService);
 		if(serviceT!=null) throw new RuntimeException("User exists");
 		
 		
@@ -51,14 +52,20 @@ public class serviceLogicImp implements serviceLogic {
 	@Override
 	public Service findService(String Name) {
 		// TODO Auto-generated method stub
-		return serviceRepository.findBytypeService(Name);
+		return serviceRepository.findByName(Name);
 	}
+	public void UpdateService(String Name, String newName, String desc) {
+		Service ServiceT = serviceRepository.findByName(Name);
+		if (ServiceT == null)
+			throw new RuntimeException("User Doesent exists");
 
+		serviceRepository.modify(Name, newName,desc);
+	}
 	@Override
 	public boolean deleteService(String Name) {
 		// TODO Auto-generated method stub
 		
-		if(serviceRepository.deleteBytypeService(Name) != null) {
+		if(serviceRepository.deleteByName(Name) != null) {
 			return true;
 		};
 		

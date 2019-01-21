@@ -18,66 +18,65 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.entities.Service;
-import com.entities.Service;
-import com.services.ServiceRepository;
-import com.services.ServiceRepository;
+import com.entities.Admin;
+import com.entities.Admin;
+import com.services.AdminRepository;
+import com.services.AdminRepository;
 
-import busLogicImp.serviceLogicImp;
-
+import busLogicImp.adminLogicImp;
 
 @RestController
 @CrossOrigin(origins = "*")
-@RequestMapping(path = "/service")
-public class ServiceControll {
+@RequestMapping(path = "/admin")
+public class AdminControll {
 	@Autowired
-	private ServiceRepository serviceRepository;
+	private AdminRepository adminRepository;
 	@Autowired
-	private serviceLogicImp serviceLogic;
+	private adminLogicImp adminLogic;
 
-	@PostMapping(path = "/addService") // Map ONLY GET Requests
-	public Service addService(@RequestParam String name,@RequestParam String desc) {
+	@PostMapping(path = "/addAdmin") // Map ONLY GET Requests
+	public Admin addAdmin(@RequestParam String name,@RequestParam String password,@RequestParam String Cpassword,@RequestParam String email,@RequestParam String phone ) {
 
-		return serviceLogic.addService(name,desc);
+		return adminLogic.addAdmin(name, password, Cpassword);
 
 	}
 
-	@GetMapping(path = "/allServices")
-	public List<Service> getAllServices() {
+	@GetMapping(path = "/allAdmins")
+	public List<Admin> getAllAdmins() {
 		// This returns a JSON or XML with the users
-		return serviceLogic.getAllService();
+		return adminLogic.getAllAdmin();
 
 	}
 
-	@GetMapping(path = "/findService/{id}")
-	public Optional<Service> findService(@PathVariable(value = "id") Long id) {
+	@GetMapping(path = "/findAdmin/{id}")
+	public Optional<Admin> findAdmin(@PathVariable(value = "id") Long id) {
 		// This returns a JSON or XML with the users
-		return serviceRepository.findById(id);
+		return adminRepository.findById(id);
 
 	}
 
-	@GetMapping(path = "/findServiceByName/{name}")
-	public Service findServiceByName(@PathVariable(value = "name") String name) {
+	@GetMapping(path = "/findAdminByName/{name}")
+	public Admin findAdminByName(@PathVariable(value = "name") String name) {
 
-		return serviceLogic.findService(name);
+		return adminLogic.findAdmin(name);
 	}
 
-	@PutMapping(path = "/updateService")
-	public void updateService(@RequestParam String name, @RequestParam String newName, @RequestParam String desc) {
-		 serviceLogic.UpdateService(name,newName,desc);
+	@PutMapping(path = "/updateAdmin")
+	public void updateAdmin(@RequestParam String name, @RequestParam String newName, @RequestParam String password) {
+		 adminLogic.UpdateAdmin(name,newName,password);
 		 
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public String delete(@PathVariable(value = "id") Long id) {
-		Optional<Service> user = serviceRepository.findById(id);
-		serviceRepository.deleteById(id);
+		Optional<Admin> user = adminRepository.findById(id);
+		adminRepository.deleteById(id);
 		return user + " is deleted";
 	}
 
 	@DeleteMapping("/delete/{name}")
 	public String delete(@PathVariable(value = "name") String name) {
-		serviceLogic.deleteService(name);
+		adminLogic.deleteAdmin(name);
 		return "deleted";
 	}
 

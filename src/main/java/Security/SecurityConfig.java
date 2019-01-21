@@ -32,21 +32,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
 		// http.formLogin();
-		http.authorizeRequests().antMatchers("/artisan/addArtisan", "/client/addClient").permitAll();
-		http.authorizeRequests().antMatchers("/artisan/allartisans", "/client/allclients").hasAuthority("admin");
+
+		http.authorizeRequests().antMatchers("/artisan/allartisans", "/client/allclients", "/service/addService",
+				"/service/updateService").hasAuthority("admin");
+		http.authorizeRequests()
+				.antMatchers("/artisan/delete/**", "/client/delete/**", "/service/delete/**", "/admin/delete/**","/admin/**")
+				.hasAuthority("admin");
+
+		http.authorizeRequests().antMatchers("/client/updateClient", "/artisan/findArtisanByName/**",
+				"/artisan/findArtisanByService/**").hasAuthority("Client");
+		http.authorizeRequests().antMatchers("/updateArtisan", "/client/findClientByName/**","client/findClient/**")
+				.hasAuthority("Artisan");
+
+		http.authorizeRequests().antMatchers("service/findServiceByName/**").permitAll();
 		http.authorizeRequests().antMatchers("/login/**").permitAll();
-		http.authorizeRequests().antMatchers("/service/**").hasAuthority("Client");
-		/*
-		 * http.authorizeRequests()
-		 * .antMatchers("/artisan/delete/**","/client/delete/*","/service/delete/*", 
-		 * "/admin/delete/*") .hasAuthority("admin");
-		 */
-		// http.authorizeRequests().antMatchers("service/addservice").hasAuthority("admin");
+		http.authorizeRequests().antMatchers("/artisan/addArtisan", "/client/addClient", "/service/allServices")
+				.permitAll();
 		// http.authorizeRequests().anyRequest().authenticated();
-		http.authorizeRequests().anyRequest().permitAll();
+		//http.authorizeRequests().anyRequest().permitAll();
 
 		http.addFilter(new JwtAuthentificationFilter(authenticationManager()));
-		http.addFilterBefore(new JWTAuthorizationFilter(),UsernamePasswordAuthenticationFilter.class);
+		http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
 }

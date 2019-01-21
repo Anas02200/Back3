@@ -37,6 +37,19 @@ public class Artisan extends Admin {
 		Phone = phone;
 		Adresse = adresse;
 		this.role = role;
+		
+	}
+
+
+
+	public Service getService() {
+		return service;
+	}
+
+
+
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 
