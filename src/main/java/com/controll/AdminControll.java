@@ -35,7 +35,7 @@ public class AdminControll {
 	private adminLogicImp adminLogic;
 
 	@PostMapping(path = "/addAdmin") // Map ONLY GET Requests
-	public Admin addAdmin(@RequestParam String name,@RequestParam String password,@RequestParam String Cpassword,@RequestParam String email,@RequestParam String phone ) {
+	public Admin addAdmin(@RequestParam String name,@RequestParam String password,@RequestParam String Cpassword) {
 
 		return adminLogic.addAdmin(name, password, Cpassword);
 
