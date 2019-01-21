@@ -28,10 +28,14 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 
 		response.addHeader("Access-Control-Allow-Origin", "*");
-		response.addHeader("Access-Control-Allow-Headers","Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
-		
-		response.addHeader("Access-Control-Expose-Headers","Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization,Access-Control-Allow-Headers");
+		response.addHeader("Access-Control-Allow-Headers",
+				"Origin,Accept,X-Requested-With,Content-Type,Access-Control-Request-Method,Access-Control-Request-Headers,Authorization");
+
+		response.addHeader("Access-Control-Expose-Headers",
+				"Access-Control-Allow-Origin,Access-Control-Allow-Credentials,Authorization,Access-Control-Allow-Headers");
+		//response.addHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,PUT,DELETE");
 		if (request.getMethod().equals("OPTION")) {
+
 			response.setStatus(HttpServletResponse.SC_OK);
 		} else if (request.getRequestURI().equals("/login")) {
 			filterChain.doFilter(request, response);
@@ -41,7 +45,7 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 		else {
 
 			String jwt = request.getHeader(SecurityParams.JWT_HEADER_NAME);
-			//System.out.println("jwt=" + jwt);
+			// System.out.println("jwt=" + jwt);
 			if (jwt == null || !jwt.startsWith(SecurityParams.HEADER_PREFIX)) {
 				filterChain.doFilter(request, response);
 				return;
@@ -50,8 +54,8 @@ public class JWTAuthorizationFilter extends OncePerRequestFilter {
 			DecodedJWT decodedJWT = verifier.verify(jwt.substring(SecurityParams.HEADER_PREFIX.length()));
 			String username = decodedJWT.getSubject();
 			List<String> roles = decodedJWT.getClaims().get("roles").asList(String.class);
-			//System.out.println("name=" + username);
-			//System.out.println("roles=" + roles);
+			// System.out.println("name=" + username);
+			// System.out.println("roles=" + roles);
 			Collection<GrantedAuthority> authorities = new ArrayList<>();
 			roles.forEach(rn -> {
 				authorities.add(new SimpleGrantedAuthority(rn));

@@ -33,10 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// http.formLogin();
 
-		http.authorizeRequests().antMatchers("/artisan/allartisans", "/client/allclients", "/service/addService",
+		http.authorizeRequests().antMatchers("/artisan/allArtisans", "/client/allClients", "/service/addService",
 				"/service/updateService").hasAuthority("admin");
 		http.authorizeRequests()
-				.antMatchers("/artisan/delete/**", "/client/delete/**", "/service/delete/**", "/admin/delete/**","/admin/**")
+				.antMatchers("/artisan/delete/**", "/client/delete/**", "/service/delete/**", "/admin/**")
 				.hasAuthority("admin");
 
 		http.authorizeRequests().antMatchers("/client/updateClient", "/artisan/findArtisanByName/**",
