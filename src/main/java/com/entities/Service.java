@@ -6,9 +6,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
-import javax.persistence.UniqueConstraint;
 
 @Entity
 public class Service {
@@ -16,7 +16,7 @@ public class Service {
 	@GeneratedValue
 	private long Id;
 	@Column(unique=true)
-	private String typeService;
+	private String name;
 	private String serviceDescription;
 	@OneToMany
 	private List<Artisan> artisan;
@@ -29,7 +29,7 @@ public class Service {
 	public Service(long id, String typeService, String serviceDescription) {
 		super(); 
 		Id = id;
-		this.typeService = typeService;
+		this.name = typeService;
 		this.serviceDescription = serviceDescription;
 	}
 /*
@@ -49,11 +49,11 @@ public class Service {
 	}
 
 	public String getTypeService() {
-		return typeService;
+		return name;
 	}
 
 	public void setTypeService(String typeService) {
-		this.typeService = typeService;
+		this.name = typeService;
 	}
 
 	public String getServiceDescription() {

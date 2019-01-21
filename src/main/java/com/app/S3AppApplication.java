@@ -1,5 +1,7 @@
 package com.app;
 
+import javax.transaction.Transactional;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -10,7 +12,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import busLogic.clientLogic;
+import com.services.ArtisanRepository;
+
+import busLogic.artisanLogic;
 
 @SpringBootApplication
 @EnableAutoConfiguration
@@ -22,16 +26,28 @@ public class S3AppApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(S3AppApplication.class, args);
 	}
-/*
+
+	/*
+	 * @Bean CommandLineRunner start(artisanLogic ad) {
+	 * 
+	 * return args -> {
+	 * 
+	 * ad.addArtisan("ARTISAN3", "1234", "1234", "mail", "06555",
+	 * "adresssss","biim");
+	 * 
+	 * };
+	 * 
+	 * }
+	 */
+	/*
 	@Bean
-	CommandLineRunner start(clientLogic ad) {
+	CommandLineRunner start(ArtisanRepository ad) {
 
 		return args -> {
-			
-				ad.addClient("client", "1234", "1234", "email", "phone");
-			
-		};
+			ad.AddServiceToArtisan("tits", "biim");
+			//ad.AddArtisanToservice("tits", "biim");
 
+		};
 	}
 */
 	@Bean

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.entities.Artisan;
+import com.entities.Client;
 import com.entities.Admin;
 import com.services.AdminRepository;
 
@@ -58,6 +59,13 @@ public class adminLogicImp implements adminLogic {
 	public Admin findAdmin(String Name) {
 		// TODO Auto-generated method stub
 		return adminRepository.findByName(Name);
+	}
+	public void UpdateAdmin(String Name, String newName, String password) {
+		Admin AdminT = adminRepository.findByName(Name);
+		if (AdminT == null)
+			throw new RuntimeException("User Doesent exists");
+
+		adminRepository.modify(Name, newName,bCrypt.encode(password));
 	}
 
 	@Override
