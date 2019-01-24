@@ -7,11 +7,14 @@ import javax.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import com.entities.Artisan;
 import com.entities.Client;
 
+
+@RepositoryRestResource( path = "/Artisan")
 @Repository
 public interface ArtisanRepository extends JpaRepository<Artisan, Long> {
 

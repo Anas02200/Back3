@@ -5,22 +5,26 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
 
 import com.entities.Service;
 
+
+@RepositoryRestResource( path = "/Service")
 @Repository
 public interface ServiceRepository extends JpaRepository<Service, Long> {
 	/*
 	 * @Query("select u from #{#entityName} u where u.typeService = ?1")
 	 * List<Service> findByName(String Name);
 	 */
+	
+	public List<Service>findAll();
 	public Service findByName(String typeS);
 
 	public Service deleteByName(String typeS);
-
 	@Modifying
-	@Query(value = "update client u SET u.name=?2,u.serviceDescription=?3 where u.name=?1", nativeQuery = true)
+	@Query(value = "update service u SET u.name=?2,u.serviceDescription=?3 where u.name=?1", nativeQuery = true)
 	public void modify(String name, String newName, String serviceDescription);
 
 	// un arti peut faire un seul service

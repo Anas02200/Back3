@@ -49,7 +49,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests().antMatchers("/artisan/addArtisan", "/client/addClient", "/service/allServices")
 				.permitAll();
 		// http.authorizeRequests().anyRequest().authenticated();
-		//http.authorizeRequests().anyRequest().permitAll();
+		http.authorizeRequests().anyRequest().permitAll();
 
 		http.addFilter(new JwtAuthentificationFilter(authenticationManager()));
 		http.addFilterBefore(new JWTAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

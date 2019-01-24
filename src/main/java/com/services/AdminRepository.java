@@ -1,12 +1,18 @@
 package com.services;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
-import com.entities.Client;
 import com.entities.Admin;
+
+
+@RepositoryRestResource( path = "/Admin")
 @Repository
 public interface AdminRepository extends JpaRepository<Admin,Long> {
 	/*
@@ -14,6 +20,8 @@ public interface AdminRepository extends JpaRepository<Admin,Long> {
 	add ADMIN
 	delete
 	update*/
+	@RestResource
+	public List<Admin> findAll();
 	
 	public Admin findByName(String name);
 	public Admin deleteByName(String name);
